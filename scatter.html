@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.0-beta.2/echarts.common.js"></script>
+</head>
+<body>
+    <div id="main" style="width: 1200px; height: 800px;"></div>
+</body>
+
+<script>
+    d3.csv('./data/Tsne2.csv').then( data=> {
+        console.log(data);
+        const scatterData = []
+        const catData = []
+        data.forEach((d,i) => {
+            var item = []
+            item.push(d['x'])
+            item.push(d['y'])
+            scatterData[i] = item
+        });
+        console.log(scatterData);
+        var myChart = echarts.init(document.getElementById('main'));
+        option = {
+            xAxis: {
+                type: "value",
+                scale: true,
+            },
+            yAxis: {
+                type: "value",
+                scale: true,
+            },
+            series: [{
+                type: "scatter",
+                data:scatterData
+            }]
+        };
+        myChart.setOption(option);
+    })
+</script>
+
+</html>

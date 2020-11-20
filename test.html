@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>testD3_chp10_1.html</title>
+    
+    <script type="text/javascript" src="http://d3js.org/d3.v5.min.js"></script>
+  </head>
+  
+  <body>
+    <svg width="960" height="600"></svg>
+    <script>
+        const svg = d3.select("svg");
+        const margin = {top:60,bottom:60,left:60,right:60};
+        const width = svg.attr("width");
+        const height = svg.attr("height");
+        const g = svg.append('g').attr('transform', 'translate(' + margin.top + ',' + margin.left + ')');
+        var dataset = [10,20,30,23,13,40,27,35,20];
+        const Xscale = d3.scaleBand()
+                        .domain(d3.range(dataset.length))
+                        .range([0,width - margin.left - margin.right]);
+        const Xaxis = d3.axisBottom(Xscale);
+        const Yscale = d3.scaleLinear()
+                        .domain([0,d3.max(dataset)])
+                        .range([height - margin.top - margin.bottom, 0]);
+        const Yaxis = d3.axisLeft(Yscale);
+        g.append('g')
+            .attr('transform', 'translate(' + 0 + ',' + (height - margin.top - margin.bottom) + ')')
+            .call(Xaxis);
+        g.append('g')
+            .attr('transform', 'translate(' + 0 + ',' + 0 + ')')
+            .call(Yaxis);
+        const gs = g.selectAll('rect').data(dataset).enter();
+
+        var rectPadding = 20;//矩形之间的间隙
+        gs.append('rect')
+            .attr('x',(d,i) =>{
+                return Xscale(i) + rectPadding/2;
+            })
+            .attr('y',(d,i) => {
+                return Yscale(d);
+            })
+
+
+    </script>
+  </body>
+</html>
